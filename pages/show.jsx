@@ -39,12 +39,18 @@ const Show = (props) => (
 );
 
 
-Show.getInitialProps = async function ({res, query}) {
+Show.getInitialProps = async function ({req, res, query}) {
 
     let data = await getData();
 
-    let quota;
+    if (!data || !data.quotas) {
+        res.writeHead(404, {
+            Location: req.url
+        });
+        res.end()
+    }
 
+    let quota;
     if (query.id) {
 
         data.quotas.map(quotaItem => {

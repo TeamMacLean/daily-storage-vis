@@ -22,7 +22,7 @@ const Index = (props) => (
                     <ul style={{marginLeft: 40 + 'px'}}>
                         {container.quotas.map(quota => (
                             <li key={quota.id}>
-                                <Link prefetch  href={`/show?id=${quota.id}`}>
+                                <Link prefetch href={`/show?id=${quota.id}`}>
                                     <a>{quota.shortPath}{UsageGraph(quota)}</a>
                                 </Link>
                             </li>
@@ -46,9 +46,17 @@ Index.componentDidMount = function () {
 };
 
 
-Index.getInitialProps = async function () {
+Index.getInitialProps = async function ({req, res}) {
 
     const data = await getData();
+
+    if (!data || !data.quotas) {
+        res.writeHead(404, {
+            Location: req.url
+        });
+        res.end()
+    }
+
 
     let containers = [];
 
