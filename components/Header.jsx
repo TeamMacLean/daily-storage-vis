@@ -7,7 +7,7 @@ export default function Header() {
     return (
 
 
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+        <nav className="navbar is-success" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link href="/">
                     <a className="navbar-item">

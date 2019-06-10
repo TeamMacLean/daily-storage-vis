@@ -24,10 +24,10 @@ export default function UsageGraph(quota) {
 
         percent = current * 100 / max;
 
-        if (percent >= 70) {
+        if (percent >= 80) {
             color = 'warning'
         }
-        if (current >= soft) {
+        if (percent >= 95 || current >= soft || quota.thresholds.advisory_exceeded || quota.thresholds.hard_exceeded) {
             color = 'danger'
         }
     }
@@ -35,7 +35,7 @@ export default function UsageGraph(quota) {
 
     return (
         <span style={{marginLeft: 20 + "px", width: 100 + "px", display: "inline-block"}}>
-            <progress className={"progress is-" + color} value={percent} max={100}>15%</progress>
+            <progress className={"progress is-" + color} value={percent} max={100}/>
         </span>
     )
 }

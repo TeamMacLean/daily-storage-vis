@@ -19,15 +19,15 @@ const Show = (props) => (
 
             <h2 className="heading">thresholds</h2>
             <p>advisory: {formatBytes(props.quota.thresholds.advisory)}</p>
-            <p>advisory_exceeded: {props.quota.thresholds.advisory_exceeded}</p>
+            <p>advisory_exceeded: {props.quota.thresholds.advisory_exceeded.toString()}</p>
             <p>advisory_last_exceeded: {props.quota.thresholds.advisory_last_exceeded}</p>
             <p>hard: {formatBytes(props.quota.thresholds.hard)}</p>
-            <p>hard_exceeded: {props.quota.thresholds.hard_exceeded}</p>
+            <p>hard_exceeded: {props.quota.thresholds.hard_exceeded.toString()}</p>
             <p>hard_last_exceeded: {props.quota.thresholds.hard_last_exceeded}</p>
-            <p>soft: {props.quota.thresholds.soft}</p>
-            <p>soft_exceeded: {props.quota.thresholds.soft_exceeded}</p>
-            <p>soft_grace: {props.quota.thresholds.soft_grace}</p>
-            <p>soft_last_exceeded: {props.quota.thresholds.soft_last_exceeded}</p>
+            <p>soft: {props.quota.thresholds.soft || 'unknown'}</p>
+            <p>soft_exceeded: {props.quota.thresholds.soft_exceeded || 'unknown'}</p>
+            <p>soft_grace: {props.quota.thresholds.soft_grace || 'unknown'}</p>
+            <p>soft_last_exceeded: {props.quota.thresholds.soft_last_exceeded || 'unknown'}</p>
 
             <br/>
             <h2 className="heading">usage</h2>
@@ -43,12 +43,6 @@ Show.getInitialProps = async function ({req, res, query}) {
 
     let data = await getData();
 
-    if (!data || !data.quotas) {
-        res.writeHead(404, {
-            Location: req.url
-        });
-        res.end()
-    }
 
     let quota;
     if (query.id) {

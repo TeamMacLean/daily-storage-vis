@@ -10,7 +10,7 @@ const Index = (props) => (
     <Layout>
         <div className="container">
 
-            <h1 className="title">{props.dateFull}</h1>
+            <h1 className="title has-text-centered">{props.dateFull}</h1>
 
             <h1 className="title">Quotas</h1>
 
@@ -49,15 +49,6 @@ Index.componentDidMount = function () {
 Index.getInitialProps = async function ({req, res}) {
 
     const data = await getData();
-
-    if (!data || !data.quotas) {
-        res.writeHead(404, {
-            Location: req.url
-        });
-        res.end()
-    }
-
-
     let containers = [];
 
 
