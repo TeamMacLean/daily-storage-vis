@@ -8,6 +8,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
 const handle = app.getRequestHandler();
 
+const config = require('./config');
+
 function btoa(string) {
     return Base64.encode(string)
 }
@@ -47,7 +49,7 @@ app.prepare()
             return handle(req, res);
         });
 
-        server.listen(3000, (err) => {
+        server.listen(config.port, (err) => {
             if (err) throw err;
             console.log('> Ready on http://localhost:3000');
         })
