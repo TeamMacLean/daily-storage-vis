@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ProcessData from "../lib/processData";
 import UsageGraph from '../components/UsageGraph'
 
+
 function formatBytes(a, b) {
     if (0 == a) return "0 Bytes";
     var c = 1024, d = b || 2, e = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
@@ -81,8 +82,8 @@ Show.getInitialProps = async function ({req, res, query}) {
 
     let quota;
     if (query.id) {
-        const data = await getData();
-        const processedData = ProcessData(data)
+        const data = await getData(null, req);
+        const processedData = ProcessData(data);
 
         processedData.containers.map(container => {
             if (container.id === query.id) {
@@ -96,7 +97,7 @@ Show.getInitialProps = async function ({req, res, query}) {
                 })
             }
         });
-        
+
         if (quota) {
             quota.fullPath = quota.path;
             if (quota.persona) {

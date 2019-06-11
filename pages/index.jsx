@@ -49,7 +49,7 @@ const Index = (props) => (
 
 
 Index.getInitialProps = async function ({req, res}) {
-    const data = await getData();
+    const data = await getData(null, req);
     return ProcessData(data)
 };
 
