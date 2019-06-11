@@ -34,7 +34,7 @@ export default function UsageGraph(quota) {
 
 
     return (
-        <span style={{marginLeft: 20 + "px", width: 100 + "px", display: "inline-block"}}>
+        <span style={{width: 100 + "px", display: "inline-block"}}>
             <progress className={"progress is-" + color} value={percent} max={100}/>
         </span>
     )

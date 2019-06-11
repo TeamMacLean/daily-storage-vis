@@ -16,8 +16,12 @@ const Index = (props) => (
             <table className="table is-fullwidth">
                 <thead>
                 <tr>
-                </tr>
-                <tr>
+                    <th>
+                        Path
+                    </th>
+                    <th>
+                        Usage
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,20 +37,6 @@ const Index = (props) => (
                             {UsageGraph(container)}
                         </th>
 
-
-                        {/*if there are quotas*/}
-                        {/*<ul style={{marginLeft: 40 + 'px'}}>*/}
-                        {/*{container.quotas.map(quota => (*/}
-                        {/*<tr key={quota.id}>*/}
-                        {/*<li key={quota.id}>*/}
-                        {/*<Link prefetch href={`/show?id=${quota.id}`}>*/}
-                        {/*<a>{quota.shortPath}{UsageGraph(quota)}</a>*/}
-                        {/*</Link>*/}
-                        {/*</li>*/}
-                        {/*</tr>*/}
-                        {/*))}*/}
-                        {/*</ul>*/}
-                        {/*</div>*/}
                     </tr>
                 ))}
                 </tbody>
@@ -56,10 +46,6 @@ const Index = (props) => (
         </div>
     </Layout>
 );
-
-Index.handleChange = function () {
-    console.log('handeling change');
-};
 
 
 Index.getInitialProps = async function ({req, res}) {

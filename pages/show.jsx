@@ -40,15 +40,34 @@ const Show = (props) => (
             {(props.quota.quotas && props.quota.quotas.length > 0 &&
                 <>
                     <h2 className="heading">Quotas</h2>
-                    <ul>
+                    <table className="table is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>
+                                Path
+                            </th>
+                            <th>
+                                Usage
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {props.quota.quotas.map(quota => (
-                            <li key={quota.id}>
-                                <Link prefetch href={`/show?id=${quota.id}`}>
-                                    <a>{quota.shortPath}{UsageGraph(quota)}</a>
-                                </Link>
-                            </li>
+                            <tr key={quota.id}>
+                                {/*<div key={container.id}>*/}
+                                <th>
+                                    <Link prefetch href={`/show?id=${quota.id}`}>
+                                        <a>{quota.path}</a>
+                                    </Link>
+                                </th>
+                                <th>
+                                    {UsageGraph(quota)}
+                                </th>
+
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 </>
             )}
 
@@ -69,8 +88,8 @@ Show.getInitialProps = async function ({req, res, query}) {
             if (container.id === query.id) {
                 quota = container
             }
-            if(container.quotas){
-                container.quotas.map(cq=>{
+            if (container.quotas) {
+                container.quotas.map(cq => {
                     if (cq.id === query.id) {
                         quota = cq
                     }
