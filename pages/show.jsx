@@ -57,7 +57,7 @@ const Show = (props) => (
                                 {/*<div key={container.id}>*/}
                                 <th>
                                     <Link prefetch href={`/show?id=${quota.id}`}>
-                                        <a>{quota.path}</a>
+                                        <a>{quota.fullPath}</a>
                                     </Link>
                                 </th>
                                 <th>
