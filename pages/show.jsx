@@ -1,6 +1,8 @@
 import Layout from '../components/Layout.jsx'
 import getData from "../lib/getData";
-import moment from 'moment';
+import Link from 'next/link'
+import ProcessData from "../lib/processData";
+import UsageGraph from '../components/UsageGraph'
 
 function formatBytes(a, b) {
     if (0 == a) return "0 Bytes";
@@ -9,11 +11,10 @@ function formatBytes(a, b) {
     return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f]
 }
 
-
 const Show = (props) => (
     <Layout>
         <div className="container">
-            <h1 className="title">{props.dateFull}</h1>
+            <h1 className="title has-text-centered">{props.dateFull}</h1>
             <h1 className="title is-4">{props.quota.fullPath}</h1>
 
 
@@ -34,6 +35,23 @@ const Show = (props) => (
             <p>logical: {formatBytes(props.quota.usage.logical)}</p>
             <p>physical: {formatBytes(props.quota.usage.physical)}</p>
 
+            <br/>
+
+            {(props.quota.quotas && props.quota.quotas.length > 0 &&
+                <>
+                    <h2 className="heading">Quotas</h2>
+                    <ul>
+                        {props.quota.quotas.map(quota => (
+                            <li key={quota.id}>
+                                <Link prefetch href={`/show?id=${quota.id}`}>
+                                    <a>{quota.shortPath}{UsageGraph(quota)}</a>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
+
         </div>
     </Layout>
 );
@@ -41,28 +59,38 @@ const Show = (props) => (
 
 Show.getInitialProps = async function ({req, res, query}) {
 
-    let data = await getData();
-
 
     let quota;
     if (query.id) {
+        const data = await getData();
+        const processedData = ProcessData(data)
 
-        data.quotas.map(quotaItem => {
-            if (quotaItem.id === query.id) {
-                quota = quotaItem
+        processedData.containers.map(container => {
+            if (container.id === query.id) {
+                quota = container
+            }
+            if(container.quotas){
+                container.quotas.map(cq=>{
+                    if (cq.id === query.id) {
+                        quota = cq
+                    }
+                })
             }
         });
+
+        console.log('quota', quota);
 
         if (quota) {
             quota.fullPath = quota.path;
             if (quota.persona) {
                 quota.fullPath = `${quota.path}/${quota.persona.name.split('\\').pop()}`
             }
+
+            return {quota: quota, dateFull: processedData.dateFull,}
         }
-
-        const dateFull = moment().format('YYYY/MM/DD');
-        return {quota: quota, dateFull: dateFull,}
-
+        if (res) res.statusCode = 404;
+        return {}
+        //
     } else {
         if (res) res.statusCode = 404;
         return {}

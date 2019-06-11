@@ -9,7 +9,7 @@ export default function Header() {
 
         <nav className="navbar is-success" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <Link href="/">
+                <Link prefetch href="/">
                     <a className="navbar-item">
                         <p>Daily Storage Vis</p>
                         {/*<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"/>*/}
@@ -27,7 +27,7 @@ export default function Header() {
             <div id="navbarBasicExample" className="navbar-menu">
                 <div className="navbar-start">
 
-                    <Link href="/">
+                    <Link prefetch href="/">
                         <a className="navbar-item">
                             Home
                         </a>
