@@ -96,9 +96,7 @@ Show.getInitialProps = async function ({req, res, query}) {
                 })
             }
         });
-
-        console.log('quota', quota);
-
+        
         if (quota) {
             quota.fullPath = quota.path;
             if (quota.persona) {
